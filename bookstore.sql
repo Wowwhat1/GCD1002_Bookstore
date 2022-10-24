@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2022 at 04:58 PM
+-- Generation Time: Oct 24, 2022 at 07:06 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -34,8 +34,15 @@ CREATE TABLE `book` (
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `author` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cost` double NOT NULL,
-  `img_url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `img_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `book`
+--
+
+INSERT INTO `book` (`id`, `category_id`, `publisher_id`, `title`, `author`, `cost`, `img_url`) VALUES
+(1, 1, 1, 'The Loving and the Dead', 'Enid Blyton', 16, '1.jpg');
 
 -- --------------------------------------------------------
 
@@ -48,6 +55,13 @@ CREATE TABLE `category` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `name`, `description`) VALUES
+(1, 'Supernatural', 'Supernatural fiction or supernaturalist fiction is a genre of speculative fiction that exploits or is centered on supernatural themes, often contradicting naturalist assumptions of the real world.');
 
 -- --------------------------------------------------------
 
@@ -66,7 +80,10 @@ CREATE TABLE `doctrine_migration_versions` (
 --
 
 INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
-('DoctrineMigrations\\Version20221024145751', '2022-10-24 16:58:01', 508);
+('DoctrineMigrations\\Version20221024145751', '2022-10-24 16:58:01', 508),
+('DoctrineMigrations\\Version20221024161556', '2022-10-24 18:16:06', 126),
+('DoctrineMigrations\\Version20221024163224', '2022-10-24 18:32:37', 139),
+('DoctrineMigrations\\Version20221024165457', '2022-10-24 18:55:02', 118);
 
 -- --------------------------------------------------------
 
@@ -120,8 +137,16 @@ CREATE TABLE `order_detail` (
 CREATE TABLE `publisher` (
   `id` int(11) NOT NULL,
   `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` smallint(6) NOT NULL
+  `phone` smallint(6) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `publisher`
+--
+
+INSERT INTO `publisher` (`id`, `address`, `phone`, `name`) VALUES
+(1, '193 Nguyen Luong Bang', 32767, 'HarperCollins Publishers LLC');
 
 -- --------------------------------------------------------
 
@@ -135,8 +160,15 @@ CREATE TABLE `user` (
   `roles` longtext COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '(DC2Type:json)',
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `fullname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` smallint(6) NOT NULL
+  `phone` smallint(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `email`, `roles`, `password`, `fullname`, `phone`) VALUES
+(1, 'nguyentuankiet@gmail.com', '[]', '$2y$13$nmkBC5mHOjBok/nrs2mUKuW.Rs3lYSpdcd0J/KX2FEj5lAuE03FJK', 'Nguyen Tuan Kiet', NULL);
 
 --
 -- Indexes for dumped tables
@@ -207,13 +239,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `book`
 --
 ALTER TABLE `book`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `messenger_messages`
@@ -237,13 +269,13 @@ ALTER TABLE `order_detail`
 -- AUTO_INCREMENT for table `publisher`
 --
 ALTER TABLE `publisher`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
