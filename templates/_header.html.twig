@@ -1,0 +1,51 @@
+<div class="container">
+	<header class="p-3 mb-3 border-bottom">
+		<div class="container">
+			<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+				<a href="{{ path('app_product_index') }}" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+					<img src="{{ asset('images/product/logo.png') }}" style="height: 70px; width: 70px;">
+				</a>
+
+				<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+					<li>
+						<a href="{{ path('app_category_index') }}" class="nav-link px-2 link-dark">Category</a>
+					</li>
+				</ul>
+
+				<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+					<input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+				</form>
+
+				<div class="dropdown text-end">
+					<a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+						<img src="{{ app.user ? 'https://avatars.githubusercontent.com/u/94630571?v=4' : 'https://staticfile.batdongsan.com.vn/images/icons/default-user-avatar.png' }}" alt="Ava" width="32" height="32" class="rounded-circle">
+					</a>
+					<ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
+						{% if app.user %}
+							<li>
+								<a class="dropdown-item">{{ app.user.email }}</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="{{ path('app_product_new') }}">Create new product</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="#">Profile</a>
+							</li>
+							<li><hr class="dropdown-divider"></li>
+						{% endif %}
+						<li>
+							<a class="dropdown-item" href="/{{ app.user ? 'logout' : 'login' }}">
+								{{ app.user ? 'Log Out' : 'Log In' }}
+							</a>
+							<a class="dropdown-item" href="/register">
+								{% if app.user %}Register
+								{% endif %}
+								{{ app.user ? '' : 'Register' }}
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</header>
+</div>
