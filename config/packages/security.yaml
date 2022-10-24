@@ -21,7 +21,7 @@ security:
             logout:
                 path: app_logout
                 # where to redirect after logout
-                target: app_product_index
+                target: app_book_index
 
 
             # activate different ways to authenticate

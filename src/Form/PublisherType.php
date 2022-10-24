@@ -12,9 +12,9 @@ class PublisherType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('Name')
             ->add('Address')
-            ->add('Phone')
-        ;
+            ->add('Phone');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

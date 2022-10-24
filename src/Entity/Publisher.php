@@ -34,6 +34,11 @@ class Publisher
      */
     private $books;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Name;
+
     public function __construct()
     {
         $this->books = new ArrayCollection();
@@ -94,6 +99,18 @@ class Publisher
                 $book->setPublisher(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->Name;
+    }
+
+    public function setName(?string $Name): self
+    {
+        $this->Name = $Name;
 
         return $this;
     }

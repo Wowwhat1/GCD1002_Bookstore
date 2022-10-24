@@ -45,7 +45,7 @@ class Book
     private $Cost;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable = true)
      */
     private $imgUrl;
 

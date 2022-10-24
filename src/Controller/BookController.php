@@ -6,6 +6,7 @@ use App\Entity\Book;
 use App\Form\BookType;
 use App\Repository\BookRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,9 +35,24 @@ class BookController extends AbstractController
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $bookRepository->add($book, true);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $bookImage = $form->get('Image')->getData();
+            if ($bookImage) {
+                $originExt = pathinfo($bookImage->getClientOriginalName(), PATHINFO_EXTENSION);
+                $bookRepository->add($book, true);
+                $newFilename = $book->getId() . '.' . $originExt;
+
+                try {
+                    $bookImage->move(
+                        $this->getParameter('book_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                }
+                $book->setImgUrl($newFilename);
+                $bookRepository->add($book, true);
+            }
             return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -81,7 +97,7 @@ class BookController extends AbstractController
      */
     public function delete(Request $request, Book $book, BookRepository $bookRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$book->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $book->getId(), $request->request->get('_token'))) {
             $bookRepository->remove($book, true);
         }
 
