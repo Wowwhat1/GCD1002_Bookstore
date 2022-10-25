@@ -17,6 +17,29 @@
 					<th>Description</th>
 					<td>{{ category.Description }}</td>
 				</tr>
+				<tr>
+					<th>Related books</th>
+					<td>
+						<table class="table">
+							<tr>
+								<td style="font-weight: bold;">Title</td>
+								<td style="font-weight: bold;">Price</td>
+							</tr>
+							{% for book in category.Books %}
+								<tr>
+									<td>{{ book.Title }}</td>
+									<td>${{ book.Cost }}</td>
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="4">No records found</td>
+								</tr>
+							{% endfor %}
+						</table>
+					</td>
+				</tr>
+
+
 			</tbody>
 		</table>
 
