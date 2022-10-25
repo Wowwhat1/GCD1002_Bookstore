@@ -5,37 +5,48 @@
 
 {% block body %}
 	<div class="container">
-		<h1>Book index</h1>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Title</th>
-					<th>Author</th>
-					<th>Price</th>
-					<th>Image</th>
-					<th>actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for book in books %}
-					<tr>
-						<td>{{ book.Title }}</td>
-						<td>{{ book.Author }}</td>
-						<td>{{ book.Cost }}</td>
-						<td><img src=" {{ asset('images/book/'~ book.imgurl) }}" alt="Symfony" class=".img-fluid"></td>
+		<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+			<div class="col-md-5 p-lg-5 mx-auto my-5">
+				<h1 class="display-4 fw-normal">BookWorm</h1>
+				<p class="lead fw-normal">When it comes to choosing a good book, we don't discriminate here at BookWorm. From an essential bestseller to a novel by author Sidney Sheldon, we have them all. Jumpstart your reading efforts based on the category of BookWorm.</p>
+				<a class="btn btn-outline-secondary" href="{{ path('app_category_index') }}">Find More</a>
+			</div>
+		</div>
 
-						<td>
-							<a href="{{ path('app_book_show', {'id': book.id}) }}">show</a>
-							<a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
-						</td>
-					</tr>
-				{% else %}
-					<tr>
-						<td colspan="6">no records found</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-		<a href="{{ path('app_book_new') }}">Create new</a>
+		<div class="container-md">
+			<div class="row">
+				<div class="col-3">
+					<h3 class="fw-bold mb-0 fs-4">Filter</h3>
+				</form>
+			</div>
+
+
+			<div class="col-9">
+				<div class="container">
+					<h3 class="fw-bold mb-0 fs-4">Book Listing</h3>
+					<div class="row row-cols-1 row-cols-md-4 g-4">
+						{% for book in books %}
+							<div class="col">
+								<div class="card h-100">
+									<img src=" {{ asset('images/book/'~ book.imgurl) }}" class="card-img-top" alt="BOOKWORM">
+									<div class="card-body">
+										<a href="{{ path('app_book_show', {'id': book.id}) }}" style="text-decoration: none;">
+											<p style="color: #00205b; font-size: 18px; font-weight: 400; text-align: center; overflow: hidden; text-overflow: ellipsis;">{{ book.Title }}</p>
+										</a>
+										<p style="color: gray; font-size: 16px; font-weight: 400; text-align: center; margin-bottom: 0rem;">
+											{{ book.Author }}</p>
+										<p style="font-size: 17px; color: #00205b; font-weight: 400;">Price: ${{ book.Cost }}</p>
+									</div>
+									<div class="card-footer">
+										<a class="btn btn-outline-secondary" href="#">Add to cart</a>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+
 {% endblock %}
