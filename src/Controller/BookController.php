@@ -19,10 +19,13 @@ class BookController extends AbstractController
     /**
      * @Route("/", name="app_book_index", methods={"GET"})
      */
-    public function index(BookRepository $bookRepository): Response
+    public function index(Request $request, BookRepository $bookRepository): Response
     {
+        $search = $request->query->get('search');
+        $query = $bookRepository->findMore($search);
+        $book = $query->getResult();
         return $this->render('book/index.html.twig', [
-            'books' => $bookRepository->findAll(),
+            'books' => $book,
         ]);
     }
 
@@ -34,7 +37,7 @@ class BookController extends AbstractController
         $book = new Book();
         $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
-
+        $search = $request->query->get('search');
 
         if ($form->isSubmitted() && $form->isValid()) {
             $bookImage = $form->get('Image')->getData();
@@ -59,6 +62,7 @@ class BookController extends AbstractController
         return $this->renderForm('book/new.html.twig', [
             'book' => $book,
             'form' => $form,
+            'search' => $search,
         ]);
     }
 

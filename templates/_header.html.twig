@@ -1,53 +1,58 @@
 <div class="container">
 	<header class="p-3 mb-3 border-bottom">
-		<div class="container">
-			<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-				<a href="{{ path('app_book_index') }}" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
-					<img src="{{ asset('img/logo.png') }}" style="height: 70px; width: 70px;">
+		<nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example" style="border-radius: 7px;">
 
+			<div class="container-fluid">
+				<a class="navbar-brand" href="{{ path('app_book_index') }}">BOOKWORM</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
 
-				</a>
-
-				<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-					<li>
-						<a href="{{ path('app_category_index') }}" class="nav-link px-2 link-dark">Category</a>
-					</li>
-				</ul>
-
-				<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-					<input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-				</form>
-
-				<div class="dropdown text-end">
-					<a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-						<img src="{{ app.user ? 'https://avatars.githubusercontent.com/u/94630571?v=4' : 'https://staticfile.batdongsan.com.vn/images/icons/default-user-avatar.png' }}" alt="Ava" width="32" height="32" class="rounded-circle">
-					</a>
-					<ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
-						{% if app.user %}
-							<li>
-								<a class="dropdown-item">{{ app.user.email }}</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="{{ path('app_book_new') }}">Create new book</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="#">Profile</a>
-							</li>
-							<li><hr class="dropdown-divider"></li>
-						{% endif %}
-						<li>
-							<a class="dropdown-item" href="/{{ app.user ? 'logout' : 'login' }}">
-								{{ app.user ? 'Log Out' : 'Log In' }}
-							</a>
-							<a class="dropdown-item" href="/register">
-								{% if app.user %}Register
-								{% endif %}
-								{{ app.user ? '' : 'Register' }}
-							</a>
+				<div class="collapse navbar-collapse" id="navbarsExample04">
+					<ul class="navbar-nav me-auto mb-2 mb-md-0">
+						<li class="nav-item">
+							<a class="nav-link" aria-current="page" href="{{ path('app_book_index') }}">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" aria-current="page" href="{{ path('app_category_index') }}">Category</a>
 						</li>
 					</ul>
+					<form action={{ path('app_book_index') }} method="get">
+						<input class="form-control" type="search" placeholder="Search" aria-label="Search" name="search">
+					</form>
+					<div class="dropdown text-end" style="margin-left: 26px;">
+						<a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+							<img src="{{ app.user ? 'https://avatars.githubusercontent.com/u/94630571?v=4' : 'https://staticfile.batdongsan.com.vn/images/icons/default-user-avatar.png' }}" alt="Ava" width="32" height="32" class="rounded-circle">
+						</a>
+						<ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
+							{% if app.user %}
+								<li>
+									<a class="dropdown-item">Welcome
+										{{  app.user.fullname }}!</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="{{ path('app_book_new') }}">Create new book</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="#">Profile</a>
+								</li>
+								<li><hr class="dropdown-divider"></li>
+							{% endif %}
+							<li>
+								<a class="dropdown-item" href="/{{ app.user ? 'logout' : 'login' }}">
+									{{ app.user ? 'Log Out' : 'Log In' }}
+								</a>
+								<a class="dropdown-item" href="/register">
+									{% if app.user %}Register
+									{% endif %}
+									{{ app.user ? '' : 'Register' }}
+								</a>
+							</li>
+						</ul>
+					</div>
+
 				</div>
 			</div>
-		</div>
+		</nav>
 	</header>
 </div>
