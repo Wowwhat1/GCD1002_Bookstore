@@ -6,7 +6,7 @@
 {% block body %}
 	<div class="container">
 
-		<h1>Book</h1>
+		<h1>{{ book.Title }}</h1>
 
 		<table class="table">
 			<tbody>
@@ -15,21 +15,31 @@
 					<td>{{ book.Title }}</td>
 				</tr>
 				<tr>
-					<th>Author</th>
-					<td>{{ book.Author }}</td>
-				</tr>
-				<tr>
-					<th>Cost</th>
-					<td>{{ book.Cost }}</td>
-				</tr>
-				<tr>
-					<th>ImgUrl</th>
+					<th>Image</th>
 					<td>
 						<img src=" {{ asset('images/book/' ~ book.imgUrl) }}" alt="Symfony">
 					</td>
 				</tr>
+				<tr>
+					<th>Category</th>
+					<td>{{ book.Category.Name }}</td>
+				</tr>
+				<tr>
+					<th>By</th>
+					<td>{{ book.Author }}</td>
+				</tr>
+				<tr>
+					<th>Published</th>
+					<td>{{ book.Publisher.Name }}</td>
+				</tr>
+
+				<tr>
+					<th>Price</th>
+					<td>${{ book.Cost }}</td>
+				</tr>
 			</tbody>
 		</table>
+
 
 		<a href="{{ path('app_book_index') }}">back to list</a>
 
