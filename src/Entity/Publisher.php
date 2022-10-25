@@ -25,7 +25,7 @@ class Publisher
     private $Address;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="string", length=255)
      */
     private $Phone;
 
