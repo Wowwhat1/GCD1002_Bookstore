@@ -4,35 +4,38 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Publisher index</h1>
+	<div class="container">
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Address</th>
-				<th>Phone</th>
-				<th>actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for publisher in publishers %}
-				<tr>
-					<td>{{ publisher.name }}</td>
-					<td>{{ publisher.Address }}</td>
-					<td>{{ publisher.Phone }}</td>
-					<td>
-						<a href="{{ path('app_publisher_show', {'id': publisher.id}) }}">show</a>
-						<a href="{{ path('app_publisher_edit', {'id': publisher.id}) }}">edit</a>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="4">no records found</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+		<h1>Publisher index</h1>
 
-	<a href="{{ path('app_publisher_new') }}">Create new</a>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Address</th>
+					<th>Phone</th>
+					<th>actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for publisher in publishers %}
+					<tr>
+						<td>{{ publisher.name }}</td>
+						<td>{{ publisher.Address }}</td>
+						<td>{{ publisher.Phone }}</td>
+						<td>
+							<a href="{{ path('app_publisher_show', {'id': publisher.id}) }}">show</a>
+							<a href="{{ path('app_publisher_edit', {'id': publisher.id}) }}">edit</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+		<a href="{{ path('app_publisher_new') }}">Create new</a>
+	</div>
 {% endblock %}

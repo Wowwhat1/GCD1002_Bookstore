@@ -4,28 +4,30 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Publisher</h1>
+	<div class="container">
 
-	<table class="table">
-		<tbody>
-			<tr>
-				<th>Name</th>
-				<td>{{ publisher.name }}</td>
-			</tr>
-			<tr>
-				<th>Address</th>
-				<td>{{ publisher.Address }}</td>
-			</tr>
-			<tr>
-				<th>Phone</th>
-				<td>{{ publisher.Phone }}</td>
-			</tr>
-		</tbody>
-	</table>
+		<h1>Publisher</h1>
 
-	<a href="{{ path('app_publisher_index') }}">back to list</a>
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>Name</th>
+					<td>{{ publisher.name }}</td>
+				</tr>
+				<tr>
+					<th>Address</th>
+					<td>{{ publisher.Address }}</td>
+				</tr>
+				<tr>
+					<th>Phone</th>
+					<td>{{ publisher.Phone }}</td>
+				</tr>
+			</tbody>
+		</table>
 
-	<a href="{{ path('app_publisher_edit', {'id': publisher.id}) }}">edit</a>
+		<a href="{{ path('app_publisher_index') }}">back to list</a>
 
-	{{ include('publisher/_delete_form.html.twig') }}
+		<a href="{{ path('app_publisher_edit', {'id': publisher.id}) }}">edit</a>
+
+		{{ include('publisher/_delete_form.html.twig') }}</div>
 {% endblock %}

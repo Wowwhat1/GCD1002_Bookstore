@@ -1,26 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}OrderDetail{% endblock %}
+{% block title %}OrderDetail
+{% endblock %}
 
 {% block body %}
-    <h1>OrderDetail</h1>
+	<div class="container">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ order_detail.id }}</td>
-            </tr>
-            <tr>
-                <th>Quantity</th>
-                <td>{{ order_detail.Quantity }}</td>
-            </tr>
-        </tbody>
-    </table>
+		<h1>OrderDetail</h1>
 
-    <a href="{{ path('app_order_detail_index') }}">back to list</a>
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>Id</th>
+					<td>{{ order_detail.id }}</td>
+				</tr>
+				<tr>
+					<th>Quantity</th>
+					<td>{{ order_detail.Quantity }}</td>
+				</tr>
+			</tbody>
+		</table>
 
-    <a href="{{ path('app_order_detail_edit', {'id': order_detail.id}) }}">edit</a>
+		<a href="{{ path('app_order_detail_index') }}">back to list</a>
 
-    {{ include('order_detail/_delete_form.html.twig') }}
+		<a href="{{ path('app_order_detail_edit', {'id': order_detail.id}) }}">edit</a>
+
+		{{ include('order_detail/_delete_form.html.twig') }}
+	</div>
 {% endblock %}
