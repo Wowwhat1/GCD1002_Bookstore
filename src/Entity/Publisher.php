@@ -61,12 +61,12 @@ class Publisher
         return $this;
     }
 
-    public function getPhone(): ?int
+    public function getPhone(): ?string
     {
         return $this->Phone;
     }
 
-    public function setPhone(int $Phone): self
+    public function setPhone(string $Phone): self
     {
         $this->Phone = $Phone;
 
