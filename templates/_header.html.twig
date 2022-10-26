@@ -39,6 +39,11 @@
 								<li>
 									<a class="dropdown-item" href="#">Profile</a>
 								</li>
+								{% if is_granted('ROLE_ADMIN') %}
+   								<li>
+									 <a class="dropdown-item"  href="{{ path('admin') }}">Admin dashboard</a>
+								</li>
+								{% endif %}
 								<li><hr class="dropdown-divider"></li>
 							{% endif %}
 							<li>
