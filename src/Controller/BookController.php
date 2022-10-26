@@ -30,6 +30,65 @@ class BookController extends AbstractController
     }
 
     /**
+     * @Route("/addCart/{id}", name="app_add_cart", methods={"GET"})
+     */
+    public function addCart(Book $book, Request $request): Response
+    {
+        $session = $request->getSession();
+        $quantity = (int)$request->query->get('quantity');
+
+        //check if cart is empty
+        if (!$session->has('cartElements')) {
+            //if it is empty, create an array of pairs (prod Id & quantity) to store first cart element.
+            $cartElements = array($book->getId() => $quantity);
+            //save the array to the session for the first time.
+            $session->set('cartElements', $cartElements);
+        } else {
+            $cartElements = $session->get('cartElements');
+            //Add new product after the first time. (would UPDATE new quantity for added product)
+            $cartElements = array($book->getId() => $quantity) + $cartElements;
+            //Re-save cart Elements back to session again (after update/append new product to shopping cart)
+            $session->set('cartElements', $cartElements);
+        }
+        return new Response(); //means 200, successful
+    }
+
+    /**
+     * @Route("/reviewCart", name="app_review_cart", methods={"GET"})
+     */
+    public function reviewCart(Request $request): Response
+    {
+        $session = $request->getSession();
+        if ($session->has('cartElements')) {
+            $cartElements = $session->get('cartElements');
+        } else
+            $cartElements = [];
+        return $this->json($cartElements);
+    }
+
+    /**
+     * @Route("/deleteCart", name="app_delete_cart", methods={"GET"})
+     */
+    public function deleteCart(Book $book, Request $request): Response
+    {
+        $session = $request->getSession();
+        $quantity = (int)$request->query->get('quantity');
+
+        //check if cart is empty
+        if (!$session->has('cartElements')) {
+            $cartElements = $session->get('cartElements');
+        } else {
+            $cartElements = $session->get('cartElements');
+            //Add new product after the first time. (would UPDATE new quantity for added product)
+            $cartElements = array($book->getId() => $quantity) + $cartElements;
+            //Re-save cart Elements back to session again (after update/append new product to shopping cart)
+            $session->set('cartElements', $cartElements);
+        }
+        return new Response();
+    }
+
+
+    /**
      * @Route("/new", name="app_book_new", methods={"GET", "POST"})
      */
     public function new(Request $request, BookRepository $bookRepository): Response
