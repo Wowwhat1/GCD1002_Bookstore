@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 25, 2022 at 11:23 AM
+-- Generation Time: Oct 28, 2022 at 04:09 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -231,7 +231,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `roles`, `password`, `fullname`, `phone`) VALUES
-(1, 'nguyentuankiet@gmail.com', '[]', '$2y$13$nmkBC5mHOjBok/nrs2mUKuW.Rs3lYSpdcd0J/KX2FEj5lAuE03FJK', 'Nguyen Tuan Kiet', NULL);
+(1, 'nguyentuankiet@gmail.com', '[\"ROLE_ADMIN\"]', '$2y$13$nmkBC5mHOjBok/nrs2mUKuW.Rs3lYSpdcd0J/KX2FEj5lAuE03FJK', 'Nguyen Tuan Kiet', NULL),
+(3, 'tester@gmail.com', '[\"ROLE_USER\"]', '$2y$13$l/jCSielP/crRd6jBGE74.h1kx.ezBPnF9K.FLqO7uyZ4nyK35LKS', 'Tester-User', NULL);
 
 --
 -- Indexes for dumped tables
@@ -338,7 +339,7 @@ ALTER TABLE `publisher`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
