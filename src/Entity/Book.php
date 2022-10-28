@@ -6,9 +6,16 @@ use App\Repository\BookRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints\DateTime;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 
 /**
  * @ORM\Entity(repositoryClass=BookRepository::class)
+ * @Vich\Uploadable
  */
 class Book
 {
@@ -48,6 +55,12 @@ class Book
      * @ORM\Column(type="string", length=255, nullable = true)
      */
     private $imgUrl;
+
+    /**
+     * @Vich\UploadableField(mapping="thumbnails", fileNameProperty="imgUrl")
+     * @var File
+     */
+    private $imageFile;
 
     /**
      * @ORM\OneToMany(targetEntity=OrderDetail::class, mappedBy="Book")
@@ -124,18 +137,6 @@ class Book
         return $this;
     }
 
-    public function getImgUrl(): ?string
-    {
-        return $this->imgUrl;
-    }
-
-    public function setImgUrl(string $imgUrl): self
-    {
-        $this->imgUrl = $imgUrl;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, OrderDetail>
      */
@@ -164,5 +165,52 @@ class Book
         }
 
         return $this;
+    }
+
+    public function getUpdateAt(): ?\DateTimeInterface
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt(\DateTimeInterface $updateAt): self
+    {
+        $this->updateAt = $updateAt;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getImgUrl(): ?string
+    {
+        return $this->imgUrl;
+    }
+
+    /**
+     * @param string|null $imgUrl
+     * @return $this
+     */
+    public function setImgUrl(?string $imgUrl):self
+    {
+        $this->imgUrl= $imgUrl;
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param File|null $imageFile
+     */
+
+    public function setImageFile(?File $imageFile=null)
+    {
+        $this->imageFile = $imageFile;
     }
 }

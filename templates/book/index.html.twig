@@ -5,7 +5,7 @@
 
 {% block body %}
 	<div class="container">
-		<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+		<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light rounded-4">
 			<div class="col-md-5 p-lg-5 mx-auto my-5">
 				<h1 class="display-4 fw-normal">BookWorm</h1>
 				<p class="lead fw-normal">When it comes to choosing a good book, we don't discriminate here at BookWorm. From an essential bestseller to a novel by author Sidney Sheldon, we have them all. Jumpstart your reading efforts based on the category of BookWorm.</p>
@@ -28,7 +28,7 @@
 						{% for book in books %}
 							<div class="col">
 								<div class="card h-100">
-									<img src=" {{ asset('images/book/'~ book.imgurl) }}" class="card-img-top" alt="BOOKWORM">
+									<img src=" {{ asset('images/thumbnails/'~ book.imgUrl) }}" class="card-img-top" alt="BOOKWORM">
 									<div class="card-body">
 										<a href="{{ path('app_book_show', {'id': book.id}) }}" style="text-decoration: none;">
 											<p style="color: #00205b; font-size: 18px; font-weight: 400; text-align: center; overflow: hidden; text-overflow: ellipsis;">{{ book.Title }}</p>

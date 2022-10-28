@@ -53,7 +53,7 @@ class CategoryRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
-
+//
 //    public function findOneBySomeField($value): ?Category
 //    {
 //        return $this->createQueryBuilder('c')
