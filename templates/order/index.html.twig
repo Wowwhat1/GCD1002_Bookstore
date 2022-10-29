@@ -26,8 +26,10 @@
 						<td>{{ order.Payment }}</td>
 						<td>{{ order.SubTotal }}</td>
 						<td>
-							<a href="{{ path('app_order_show', {'id': order.id}) }}">show</a>
-							<a href="{{ path('app_order_edit', {'id': order.id}) }}">edit</a>
+							<a class="btn btn-dark" href="{{ path('app_order_show', {'id': order.id}) }}">show</a>
+
+							<a class="btn btn-dark" href="{{ path('app_order_edit', {'id': order.id}) }}">edit</a>
+
 						</td>
 					</tr>
 				{% else %}
@@ -38,6 +40,7 @@
 			</tbody>
 		</table>
 
-		<a href="{{ path('app_order_new') }}">Create new</a>
+		<a class="btn btn-dark" href="{{ path('app_order_new') }}">Create new</a>
+
 	</div>
 {% endblock %}
