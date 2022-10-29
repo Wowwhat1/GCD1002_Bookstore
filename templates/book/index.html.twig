@@ -28,7 +28,7 @@
 						{% for book in books %}
 							<div class="col">
 								<div class="card h-100">
-									<img src=" {{ asset('images/thumbnails/'~ book.imgUrl) }}" class="card-img-top" alt="BOOKWORM">
+									<img src=" {{ asset('images/book/'~ book.imgUrl) }}" class="card-img-top" alt="BOOKWORM">
 									<div class="card-body">
 										<a href="{{ path('app_book_show', {'id': book.id}) }}" style="text-decoration: none;">
 											<p style="color: #00205b; font-size: 18px; font-weight: 400; text-align: center; overflow: hidden; text-overflow: ellipsis;">{{ book.Title }}</p>
