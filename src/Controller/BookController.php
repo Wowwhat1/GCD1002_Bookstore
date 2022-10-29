@@ -24,10 +24,6 @@ class BookController extends AbstractController
         $search = $request->query->get('search');
         $query = $bookRepository->findMore($search);
         $book = $query->getResult();
-        $hasAccess = $this->isGranted('ROLE_ADMIN');
-        if ($hasAccess == 'ROLE_ADMIN') {
-            return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
-        }
         return $this->render('book/index.html.twig', [
             'books' => $book,
         ]);
