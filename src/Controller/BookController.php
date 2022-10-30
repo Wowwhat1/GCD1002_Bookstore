@@ -40,6 +40,8 @@ class BookController extends AbstractController
             'books' => $book,
             'categories' => $categoryRepository->findAll(),
             'catNumber' => $category,
+            'minP' => $minPrice,
+            'maxP' => $maxPrice,
         ]);
     }
 
