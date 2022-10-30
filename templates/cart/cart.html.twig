@@ -19,14 +19,18 @@
                                             </div>
                                             <div class="col-md-3 col-lg-3 col-xl-3">
                                                 <h4 >{{ bookInfo.title }}</h4>
+                                                <img src=" {{ asset('images/book/'~ bookInfo.imgUrl) }}" class="card-img-top" alt="BOOKWORM">
                                                 <p class="lead fw-normal mb-2">Category: {{ bookInfo.category.name }}</p>
                                                 <p class="lead fw-normal mb-2">Publisher: {{ bookInfo.publisher.name }}</p>
                                                 <p class="lead fw-normal mb-2">Cost: {{ bookInfo.cost}}</p>
                                             </div>
                                             <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                                                 <h3>Quantity</h3>
-                                                <input  min="1" name="quantity" value="{{ value }}"  type="number"
-                                                        class="form-control form-control-sm" />
+                                                <form action="{{ path('app_update_cart') }}" method="get">
+                                                    <input min="1" name="quantity" value="{{ value }}"  type="number"
+                                                            class="form-control form-control-sm" />
+                                                    <button class="btn btn-danger" type="submit">Update quantity</button>
+                                                </form>
                                             </div>
                                             <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                                 <h5 class="mb-0">$ {{ value* bookInfo.cost}}</h5>
@@ -34,7 +38,7 @@
                                             <form action="{{ path('app_delete_cart') }}" method="get">
                                                 <input type="hidden" value="{{ bookInfo.id }}" name="id">
                                                 <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                                    <button  class="btn btn-danger" type="submit">Remove <i class="bi bi-trash3"></i></button>
+                                                    <button class="btn btn-danger" type="submit">Remove <i class="bi bi-trash3"></i></button>
                                                 </div>
                                             </form>
                                         </div>

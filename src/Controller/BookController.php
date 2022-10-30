@@ -11,7 +11,7 @@ use App\Repository\OrderDetailRepository;
 use App\Repository\OrderRepository;
 use Exception;
 use Psr\Log\LoggerInterface;
-use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,10 +31,7 @@ class BookController extends AbstractController
         $search = $request->query->get('search');
         $query = $bookRepository->findMore($search);
         $book = $query->getResult();
-<<<<<<< HEAD
 
-=======
->>>>>>> 99ff087fa422479b83ec751b1f8b33a3f94d7596
         return $this->render('book/index.html.twig', [
             'books' => $book,
         ]);
@@ -89,11 +86,30 @@ class BookController extends AbstractController
     }
 
     /**
+     * @Route("/updateCart", name="app_update_cart", methods={"GET"})
+     */
+    public function updateCart(Request $request): Response {
+        $session = $request->getSession();
+        $bookId = $request->get('idBook');
+        $updatedQuantity = $request->get('quantity');
+        $cartElements = $session->get('cartElements');
+
+        foreach ($cartElements as $id => $quantity) {
+            if ($bookId == $id)
+                $quantity = $updatedQuantity;
+        }
+        return $this->redirectToRoute('app_review_cart',[
+            $cartElements
+        ],Response::HTTP_SEE_OTHER);
+    }
+
+    /**
      * @Route("/deleteCart", name="app_delete_cart", methods={"GET"})
      */
-    public function deleteCart(Book $book, Request $request): Response
+    public function deleteCart(BookRepository $bookRepository, Request $request): Response
     {
         $session = $request->getSession();
+        $idBook= $request->query->get('id');
         $quantity = (int)$request->query->get('quantity');
 
         //check if cart is empty
@@ -101,12 +117,10 @@ class BookController extends AbstractController
             $cartElements = $session->get('cartElements');
         } else {
             $cartElements = $session->get('cartElements');
-            //Add new product after the first time. (would UPDATE new quantity for added product)
-            $cartElements = array($book->getId() => $quantity) + $cartElements;
-            //Re-save cart Elements back to session again (after update/append new product to shopping cart)
-            $session->set('cartElements', $cartElements);
+            unset($cartElements[$idBook]);
+            $cartElements = $session->set('cartElements', $cartElements);
         }
-        return new Response();
+        return $this->redirectToRoute('app_review_cart',[],Response::HTTP_SEE_OTHER);
     }
 
     /**
