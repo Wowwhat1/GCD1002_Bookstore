@@ -28,16 +28,16 @@ class BookCrudController extends AbstractCrudController
         return array(
             TextField::new('Title'),
             TextField::new('Author'),
-//            ChoiceField::new('Category')->setChoices(static function (?CategoryRepository $foo): array {
-//                return $foo->findCategoryName($name)->getChoices();
-//            }),
-            AssociationField::new('Publisher')->autocomplete(),
+            //            ChoiceField::new('Category')->setChoices(static function (?CategoryRepository $foo): array {
+            //                return $foo->findCategoryName($name)->getChoices();
+            //            }),
+            // AssociationField::new('Publisher')->autocomplete(),
             NumberField::new('Cost'),
             ImageField::new('imgUrl')
-            ->setBasePath('images/thumbnails')
-            ->setUploadDir('public/images/thumbnails')
-            ->setUploadedFileNamePattern('[randomhash].[extension]')
-            ->setRequired(false),
+                ->setBasePath('images/book')
+                ->setUploadDir('public/images/book')
+                ->setUploadedFileNamePattern('[randomhash].[extension]')
+                ->setRequired(false),
         );
     }
 }

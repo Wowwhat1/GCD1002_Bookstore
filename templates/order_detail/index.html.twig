@@ -22,8 +22,10 @@
 						<td>{{ order_detail.id }}</td>
 						<td>{{ order_detail.Quantity }}</td>
 						<td>
-							<a href="{{ path('app_order_detail_show', {'id': order_detail.id}) }}">show</a>
-							<a href="{{ path('app_order_detail_edit', {'id': order_detail.id}) }}">edit</a>
+							<a class="btn btn-dark" href="{{ path('app_order_detail_show', {'id': order_detail.id}) }}">show</a>
+
+							<a class="btn btn-dark" href="{{ path('app_order_detail_edit', {'id': order_detail.id}) }}">edit</a>
+
 						</td>
 					</tr>
 				{% else %}
@@ -34,6 +36,7 @@
 			</tbody>
 		</table>
 
-		<a href="{{ path('app_order_detail_new') }}">Create new</a>
+		<a class="btn btn-dark" href="{{ path('app_order_detail_new') }}">Create new</a>
+
 	</div>
 {% endblock %}
