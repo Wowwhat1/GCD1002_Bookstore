@@ -54,6 +54,16 @@ class BookRepository extends ServiceEntityRepository
         return $qb->getQuery();
     }
 
+    public function findInfoBook($idBook):Query
+    {
+        $entityManager = $this->getEntityManager();
+        $qb = $entityManager->createQueryBuilder();
+        $qb->select('b')
+            ->from('App:Book', 'b')
+            ->where('b.Title =' . $idBook);
+        return $qb->getQuery();
+    }
+
     //    /**
     //     * @return Book[] Returns an array of Book objects
     //     */

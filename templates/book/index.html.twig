@@ -17,7 +17,8 @@
 			<div class="row">
 				<div class="col-3">
 					<h3 class="fw-bold mb-0 fs-4">Filter</h3>
-				</form>
+					<form>
+					</form>
 			</div>
 
 
@@ -38,7 +39,7 @@
 										<p style="font-size: 17px; color: #00205b; font-weight: 400;">Price: ${{ book.Cost }}</p>
 									</div>
 									<div class="card-footer">
-										<a class="btn btn-outline-secondary" href="#">Add to cart</a>
+										<a class="btn btn-outline-secondary" href="{{ path('app_add_cart', {'id': book.id}) }}">Add to cart</a>
 									</div>
 								</div>
 							</div>

@@ -3,8 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Book;
+use App\Entity\Order;
+use App\Entity\OrderDetail;
 use App\Form\BookType;
 use App\Repository\BookRepository;
+use App\Repository\OrderDetailRepository;
+use App\Repository\OrderRepository;
+use Exception;
+use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,10 +31,7 @@ class BookController extends AbstractController
         $search = $request->query->get('search');
         $query = $bookRepository->findMore($search);
         $book = $query->getResult();
-        $hasAccess = $this->isGranted('ROLE_ADMIN');
-        if ($hasAccess == 'ROLE_ADMIN') {
-            return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
-        }
+
         return $this->render('book/index.html.twig', [
             'books' => $book,
         ]);
@@ -36,10 +40,10 @@ class BookController extends AbstractController
     /**
      * @Route("/addCart/{id}", name="app_add_cart", methods={"GET"})
      */
-    public function addCart(Book $book, Request $request): Response
+    public function addCart(Book $book, Request $request, BookRepository $bookRepository, LoggerInterface $logger): Response
     {
         $session = $request->getSession();
-        $quantity = (int)$request->query->get('quantity');
+        $quantity = 1;
 
         //check if cart is empty
         if (!$session->has('cartElements')) {
@@ -54,20 +58,31 @@ class BookController extends AbstractController
             //Re-save cart Elements back to session again (after update/append new product to shopping cart)
             $session->set('cartElements', $cartElements);
         }
-        return new Response(); //means 200, successful
+        $session->set('cartElements', $cartElements);
+
+        return $this->renderForm('cart/addSuccessful.html.twig');
     }
 
     /**
      * @Route("/reviewCart", name="app_review_cart", methods={"GET"})
      */
-    public function reviewCart(Request $request): Response
+    public function reviewCart(Request $request, BookRepository $bookRepository): Response
     {
         $session = $request->getSession();
+        $idBook= (int)$request->query->get('idBook');
+        $quantity = (int)$request->query->get('quantity');
+        $temQuery = $bookRepository->findInfoBook($idBook);
+        $session = $request->getSession();
+
         if ($session->has('cartElements')) {
             $cartElements = $session->get('cartElements');
         } else
             $cartElements = [];
-        return $this->json($cartElements);
+
+        return $this->render('cart/cart.html.twig', [
+            'bookInfos'=>$temQuery->getResult(),
+            'quantity'=>$cartElements,
+        ]);
     }
 
     /**
@@ -91,6 +106,60 @@ class BookController extends AbstractController
         return new Response();
     }
 
+    /**
+     * @Route("/checkoutCart", name="app_checkout_cart", methods={"GET"})
+     */
+    public function checkoutCart(Request $request, OrderDetailRepository $orderDetailRepository, OrderRepository $orderRepository, BookRepository $bookRepository, ManagerRegistry $mr): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $entityManager = $mr->getManager();
+        $session = $request->getSession(); //get a session
+        // check if session has elements in cart
+        if ($session->has('cartElements') && !empty($session->get('cartElements'))) {
+            try {
+                // start transaction!
+                $entityManager->getConnection()->beginTransaction();
+                $cartElements = $session->get('cartElements');
+
+                //Create new Order and fill info for it. (Skip Total temporarily for now)
+                $order = new Order();
+                date_default_timezone_set('Asia/Ho_Chi_Minh');
+                $order->setDate(new \DateTime());
+                $user = $this->getUser();
+                $order->setUser($user);
+                $orderRepository->add($order, true); //flush here first to have ID in Order in DB.
+
+                //Create all Order Details for the above Order
+                $total = 0;
+                foreach ($cartElements as $id => $quantity) {
+                    $book = $bookRepository->find($id);
+                    //create each Order Detail
+                    $orderDetail = new OrderDetail();
+                    $orderDetail->setOrderId($order);
+                    $orderDetail->setBook($book);
+                    $orderDetail->setQuantity($quantity);
+                    $orderDetailRepository->add($orderDetail);
+
+                    $total += $book->getCost() * $quantity;
+                }
+                $order->setSubTotal($total);
+                $orderRepository->add($order);
+                // flush all new changes (all order details and update order's total) to DB
+                $entityManager->flush();
+
+                // Commit all changes if all changes are OK
+                $entityManager->getConnection()->commit();
+
+                // Clean up/Empty the cart data (in session) after all.
+                $session->remove('cartElements');
+            } catch (Exception $e) {
+                // If any change above got trouble, we roll back (undo) all changes made above!
+                $entityManager->getConnection()->rollBack();
+            }
+            return new Response("Check in DB to see if the checkout process is successful");
+        } else
+            return new Response("Nothing in cart to checkout!");
+    }
 
     /**
      * @Route("/new", name="app_book_new", methods={"GET", "POST"})

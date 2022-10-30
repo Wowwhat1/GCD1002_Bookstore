@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My cart
+{% endblock %}
+
+{% block body %}
+    <section class="h-100" style="background-color: #eee;">
+        <div class="container h-100 py-5">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-10">
+                    {% for key,value in quantity %}
+                        {% for bookInfo in bookInfos%}
+                            {% if bookInfo.id == key %}
+                                <div class="card rounded-3 mb-4">
+                                    <div class="card-body p-4">
+                                        <div class="row d-flex justify-content-between align-items-center">
+                                            <div class="col-md-2 col-lg-2 col-xl-2">
+                                                <input type="hidden" name="idBook" value="{{ bookInfo.id }}">ID: {{ bookInfo.id}}<br>
+                                            </div>
+                                            <div class="col-md-3 col-lg-3 col-xl-3">
+                                                <h4 >{{ bookInfo.title }}</h4>
+                                                <p class="lead fw-normal mb-2">Category: {{ bookInfo.category.name }}</p>
+                                                <p class="lead fw-normal mb-2">Publisher: {{ bookInfo.publisher.name }}</p>
+                                                <p class="lead fw-normal mb-2">Cost: {{ bookInfo.cost}}</p>
+                                            </div>
+                                            <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                                <h3>Quantity</h3>
+                                                <input  min="1" name="quantity" value="{{ value }}"  type="number"
+                                                        class="form-control form-control-sm" />
+                                            </div>
+                                            <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                                <h5 class="mb-0">$ {{ value* bookInfo.cost}}</h5>
+                                            </div>
+                                            <form action="{{ path('app_delete_cart') }}" method="get">
+                                                <input type="hidden" value="{{ bookInfo.id }}" name="id">
+                                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                                    <button  class="btn btn-danger" type="submit">Remove <i class="bi bi-trash3"></i></button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                    <div class="card">
+                        <div class="card-body">
+                            <a type="button" class="btn btn-warning btn-block btn-lg" href="{{ path('app_checkout_cart')}}">Proceed to Pay </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
