@@ -13,7 +13,6 @@
 				<tr>
 					<th>Name</th>
 					<th>Description</th>
-					<th>actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -21,12 +20,6 @@
 					<tr>
 						<td>{{ category.Name }}</td>
 						<td>{{ category.Description }}</td>
-						<td>
-							<a class="btn btn-dark" href="{{ path('app_category_show', {'id': category.id}) }}">Show</a>
-
-							<a class="btn btn-dark" href="{{ path('app_category_edit', {'id': category.id}) }}">Edit</a>
-
-						</td>
 					</tr>
 				{% else %}
 					<tr>
@@ -35,8 +28,5 @@
 				{% endfor %}
 			</tbody>
 		</table>
-
-		<a class="btn btn-dark" href="{{ path('app_category_new') }}">Create new</a>
-
 	</div>
 {% endblock %}

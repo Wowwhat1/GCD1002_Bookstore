@@ -88,42 +88,42 @@ class BookController extends AbstractController
     }
 
 
-    /**
-     * @Route("/new", name="app_book_new", methods={"GET", "POST"})
-     */
-    public function new(Request $request, BookRepository $bookRepository): Response
-    {
-        $book = new Book();
-        $form = $this->createForm(BookType::class, $book);
-        $form->handleRequest($request);
-        $search = $request->query->get('search');
+    // /**
+    //  * @Route("/new", name="app_book_new", methods={"GET", "POST"})
+    //  */
+    // public function new(Request $request, BookRepository $bookRepository): Response
+    // {
+    //     $book = new Book();
+    //     $form = $this->createForm(BookType::class, $book);
+    //     $form->handleRequest($request);
+    //     $search = $request->query->get('search');
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $bookImage = $form->get('Image')->getData();
-            if ($bookImage) {
-                $originExt = pathinfo($bookImage->getClientOriginalName(), PATHINFO_EXTENSION);
-                $bookRepository->add($book, true);
-                $newFilename = $book->getId() . '.' . $originExt;
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $bookImage = $form->get('Image')->getData();
+    //         if ($bookImage) {
+    //             $originExt = pathinfo($bookImage->getClientOriginalName(), PATHINFO_EXTENSION);
+    //             $bookRepository->add($book, true);
+    //             $newFilename = $book->getId() . '.' . $originExt;
 
-                try {
-                    $bookImage->move(
-                        $this->getParameter('book_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                }
-                $book->setImgUrl($newFilename);
-                $bookRepository->add($book, true);
-            }
-            return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
-        }
+    //             try {
+    //                 $bookImage->move(
+    //                     $this->getParameter('book_directory'),
+    //                     $newFilename
+    //                 );
+    //             } catch (FileException $e) {
+    //             }
+    //             $book->setImgUrl($newFilename);
+    //             $bookRepository->add($book, true);
+    //         }
+    //         return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
+    //     }
 
-        return $this->renderForm('book/new.html.twig', [
-            'book' => $book,
-            'form' => $form,
-            'search' => $search,
-        ]);
-    }
+    //     return $this->renderForm('book/new.html.twig', [
+    //         'book' => $book,
+    //         'form' => $form,
+    //         'search' => $search,
+    //     ]);
+    // }
 
     /**
      * @Route("/{id}", name="app_book_show", methods={"GET"})
@@ -135,35 +135,35 @@ class BookController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="app_book_edit", methods={"GET", "POST"})
-     */
-    public function edit(Request $request, Book $book, BookRepository $bookRepository): Response
-    {
-        $form = $this->createForm(BookType::class, $book);
-        $form->handleRequest($request);
+    // /**
+    //  * @Route("/{id}/edit", name="app_book_edit", methods={"GET", "POST"})
+    //  */
+    // public function edit(Request $request, Book $book, BookRepository $bookRepository): Response
+    // {
+    //     $form = $this->createForm(BookType::class, $book);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $bookRepository->add($book, true);
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $bookRepository->add($book, true);
 
-            return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
-        }
+    //         return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
+    //     }
 
-        return $this->renderForm('book/edit.html.twig', [
-            'book' => $book,
-            'form' => $form,
-        ]);
-    }
+    //     return $this->renderForm('book/edit.html.twig', [
+    //         'book' => $book,
+    //         'form' => $form,
+    //     ]);
+    // }
 
-    /**
-     * @Route("/{id}", name="app_book_delete", methods={"POST"})
-     */
-    public function delete(Request $request, Book $book, BookRepository $bookRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $book->getId(), $request->request->get('_token'))) {
-            $bookRepository->remove($book, true);
-        }
+    // /**
+    //  * @Route("/{id}", name="app_book_delete", methods={"POST"})
+    //  */
+    // public function delete(Request $request, Book $book, BookRepository $bookRepository): Response
+    // {
+    //     if ($this->isCsrfTokenValid('delete' . $book->getId(), $request->request->get('_token'))) {
+    //         $bookRepository->remove($book, true);
+    //     }
 
-        return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
-    }
+    //     return $this->redirectToRoute('app_book_index', [], Response::HTTP_SEE_OTHER);
+    // }
 }

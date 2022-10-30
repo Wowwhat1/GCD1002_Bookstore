@@ -45,7 +45,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $Fullname;
 
     /**
-     * @ORM\Column(type="smallint", nullable = true)
+     * @ORM\Column(type="string", nullable = true)
      */
     private $Phone;
 
@@ -158,12 +158,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPhone(): ?int
+    public function getPhone(): ?string
     {
         return $this->Phone;
     }
 
-    public function setPhone(int $Phone): self
+    public function setPhone(string $Phone): self
     {
         $this->Phone = $Phone;
 

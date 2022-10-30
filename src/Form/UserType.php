@@ -9,15 +9,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, $options): void
     {
         $builder
             ->add('email')
-            ->add('roles')
-            ->add('password')
             ->add('Fullname')
-            ->add('Phone')
-        ;
+            ->add('Phone');
     }
 
     public function configureOptions(OptionsResolver $resolver): void
