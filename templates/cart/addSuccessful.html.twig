@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My cart
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h3>Add product to cart successful</h3>
+        <a href="{{ path('app_book_index') }}" class="btn btn-outline-secondary">Continue shopping</a>
+        <a href="{{ path('app_review_cart') }}" class="btn btn-outline-secondary">My cart</a>
+    </div>
+{% endblock %}

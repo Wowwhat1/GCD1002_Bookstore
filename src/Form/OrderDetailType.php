@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Book;
 use App\Entity\OrderDetail;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,7 +16,11 @@ class OrderDetailType extends AbstractType
         $builder
             ->add('Quantity')
             ->add('OrderId')
-            ->add('Book')
+            ->add('Book',
+                EntityType::class, [
+                    'class' => Book::class,
+                    'choice_label' => 'Title',
+                ])
         ;
     }
 

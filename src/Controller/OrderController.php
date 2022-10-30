@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Book;
 use App\Entity\Order;
 use App\Form\OrderType;
 use App\Repository\OrderRepository;
