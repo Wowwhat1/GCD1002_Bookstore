@@ -7,6 +7,7 @@ use App\Entity\Order;
 use App\Entity\OrderDetail;
 use App\Form\BookType;
 use App\Repository\BookRepository;
+use App\Repository\CategoryRepository;
 use App\Repository\OrderDetailRepository;
 use App\Repository\OrderRepository;
 use Exception;
@@ -26,16 +27,38 @@ class BookController extends AbstractController
     /**
      * @Route("/", name="app_book_index", methods={"GET"})
      */
-    public function index(Request $request, BookRepository $bookRepository): Response
+    public function index(Request $request, BookRepository $bookRepository, CategoryRepository $categoryRepository): Response
     {
         $search = $request->query->get('search');
         $query = $bookRepository->findMore($search);
         $book = $query->getResult();
-
+        $minPrice = $request->query->get('minPrice');
+        $maxPrice = $request->query->get('maxPrice');
+        $category = $request->query->get('category');
+        $book = $bookRepository->filter($minPrice, $maxPrice, $category);
         return $this->render('book/index.html.twig', [
             'books' => $book,
+            'categories' => $categoryRepository->findAll(),
+            'catNumber' => $category,
         ]);
     }
+
+//    /**
+//     * @Route("/filter", name="app_book_filter", methods={"GET"})
+//     */
+//    public function filter(Request $request, BookRepository $bookRepository, CategoryRepository $categoryRepository): Response
+//    {
+//        $search = $request->query->get('search');
+//        $query = $bookRepository->findMore($search);
+//        $book = $query->getResult();
+//        $minPrice = $request->query->get('minPrice');
+//        $maxPrice = $request->query->get('maxPrice');
+//        $book = $this->filter($minPrice, $maxPrice);
+//        return $this->render('book/index.html.twig', [
+//            'books' => $book,
+//            'categories' => $categoryRepository->findAll(),
+//        ]);
+//    }
 
     /**
      * @Route("/addCart/{id}", name="app_add_cart", methods={"GET"})

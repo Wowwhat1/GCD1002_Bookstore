@@ -24,7 +24,8 @@ class BookRepository extends ServiceEntityRepository
 
     public function add(Book $entity, bool $flush = false): void
     {
-        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager
+        ()->persist($entity);
 
         if ($flush) {
             $this->getEntityManager()->flush();
@@ -64,20 +65,29 @@ class BookRepository extends ServiceEntityRepository
         return $qb->getQuery();
     }
 
-    //    /**
-    //     * @return Book[] Returns an array of Book objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('b')
-    //            ->andWhere('b.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('b.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+        /**
+         * @return Book[] Returns an array of Book objects
+         */
+        public function filter($min, $max, $cat): array
+        {
+            $entityManager = $this->getEntityManager();
+            $qb = $entityManager->createQueryBuilder();
+            $qb->select('b')
+                ->from('App\Entity\Book', 'b')
+                ->where('b.Cost >= 0    ');
+            if ($min != NULL) {
+                $qb->andWhere('b.Cost >=' . $min);
+            }
+            if ($max != NULL) {
+                $qb->andWhere('b.Cost <=' . $max);
+            }
+            if ($cat != NULL && $cat!= 0) {
+                $qb->andWhere('b.Category =' .$cat);
+            }
+
+            // returns an array of Product objects
+            return $qb->getQuery()->getResult();
+        }
 
     //    public function findOneBySomeField($value): ?Book
     //    {
