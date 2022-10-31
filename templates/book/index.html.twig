@@ -22,45 +22,48 @@
 						<select name="category">
 							<option value="0">All</option>
 							{% for category in categories %}
-								<option value="{{ category.Id }}" {{ category.id == catNumber ? 'selected' }} >{{ category.Name }}</option>
+								<option value="{{ category.Id }}" {{ category.id == catNumber ? 'selected' }}>{{ category.Name }}</option>
 							{% endfor %}
 						</select><br>
 
-						Min Price: <input type="number" name="minPrice" value="{{ minP }}"><br>
-						Max Price: <input type="number" name="maxPrice" value="{{ maxP }}"><br>
+						Min Price:
+						<input type="number" name="minPrice" value="{{ minP }}"><br>
+						Max Price:
+						<input type="number" name="maxPrice" value="{{ maxP }}"><br>
 						<br>
 						<input type="hidden" value="" name="search">
-						<input type="submit" value="Filter" class="btn btn-outline-warning"> |
+						<input type="submit" value="Filter" class="btn btn-outline-secondary">
+						|
 					</form>
-			</div>
+				</div>
 
 
-			<div class="col-9">
-				<div class="container">
-					<h3 class="fw-bold mb-0 fs-4">Book Listing</h3>
-					<div class="row row-cols-1 row-cols-md-4 g-4">
-						{% for book in books %}
-							<div class="col">
-								<div class="card h-100">
-									<img src=" {{ asset('images/book/'~ book.imgUrl) }}" class="card-img-top" alt="BOOKWORM">
-									<div class="card-body">
-										<a href="{{ path('app_book_show', {'id': book.id}) }}" style="text-decoration: none;">
-											<p style="color: #00205b; font-size: 18px; font-weight: 400; text-align: center; overflow: hidden; text-overflow: ellipsis;">{{ book.Title }}</p>
-										</a>
-										<p style="color: gray; font-size: 16px; font-weight: 400; text-align: center; margin-bottom: 0rem;">
-											{{ book.Author }}</p>
-										<p style="font-size: 17px; color: #00205b; font-weight: 400;">Price: ${{ book.Cost }}</p>
-									</div>
-									<div class="card-footer">
-										<a class="btn btn-outline-secondary" href="{{ path('app_add_cart', {'id': book.id}) }}">Add to cart</a>
+				<div class="col-9">
+					<div class="container">
+						<h3 class="fw-bold mb-0 fs-4">Book Listing</h3>
+						<div class="row row-cols-1 row-cols-md-4 g-4">
+							{% for book in books %}
+								<div class="col">
+									<div class="card h-100">
+										<img src=" {{ asset('images/book/'~ book.imgUrl) }}" class="card-img-top" alt="BOOKWORM">
+										<div class="card-body">
+											<a href="{{ path('app_book_show', {'id': book.id}) }}" style="text-decoration: none;">
+												<p style="color: #00205b; font-size: 18px; font-weight: 400; text-align: center; overflow: hidden; text-overflow: ellipsis;">{{ book.Title }}</p>
+											</a>
+											<p style="color: gray; font-size: 16px; font-weight: 400; text-align: center; margin-bottom: 0rem;">
+												{{ book.Author }}</p>
+											<p style="font-size: 17px; color: #00205b; font-weight: 400;">Price: ${{ book.Cost }}</p>
+										</div>
+										<div class="card-footer">
+											<a class="btn btn-outline-secondary" href="{{ path('app_add_cart', {'id': book.id}) }}">Add to cart</a>
+										</div>
 									</div>
 								</div>
-							</div>
-						{% endfor %}
+							{% endfor %}
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-{% endblock %}
+	{% endblock %}

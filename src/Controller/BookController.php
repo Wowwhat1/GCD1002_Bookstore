@@ -45,22 +45,22 @@ class BookController extends AbstractController
         ]);
     }
 
-//    /**
-//     * @Route("/filter", name="app_book_filter", methods={"GET"})
-//     */
-//    public function filter(Request $request, BookRepository $bookRepository, CategoryRepository $categoryRepository): Response
-//    {
-//        $search = $request->query->get('search');
-//        $query = $bookRepository->findMore($search);
-//        $book = $query->getResult();
-//        $minPrice = $request->query->get('minPrice');
-//        $maxPrice = $request->query->get('maxPrice');
-//        $book = $this->filter($minPrice, $maxPrice);
-//        return $this->render('book/index.html.twig', [
-//            'books' => $book,
-//            'categories' => $categoryRepository->findAll(),
-//        ]);
-//    }
+    //    /**
+    //     * @Route("/filter", name="app_book_filter", methods={"GET"})
+    //     */
+    //    public function filter(Request $request, BookRepository $bookRepository, CategoryRepository $categoryRepository): Response
+    //    {
+    //        $search = $request->query->get('search');
+    //        $query = $bookRepository->findMore($search);
+    //        $book = $query->getResult();
+    //        $minPrice = $request->query->get('minPrice');
+    //        $maxPrice = $request->query->get('maxPrice');
+    //        $book = $this->filter($minPrice, $maxPrice);
+    //        return $this->render('book/index.html.twig', [
+    //            'books' => $book,
+    //            'categories' => $categoryRepository->findAll(),
+    //        ]);
+    //    }
 
     /**
      * @Route("/addCart/{id}", name="app_add_cart", methods={"GET"})
@@ -83,8 +83,6 @@ class BookController extends AbstractController
             //Re-save cart Elements back to session again (after update/append new product to shopping cart)
             $session->set('cartElements', $cartElements);
         }
-        $session->set('cartElements', $cartElements);
-
         return $this->renderForm('cart/addSuccessful.html.twig');
     }
 
@@ -94,7 +92,7 @@ class BookController extends AbstractController
     public function reviewCart(Request $request, BookRepository $bookRepository): Response
     {
         $session = $request->getSession();
-        $idBook= (int)$request->query->get('idBook');
+        $idBook = (int)$request->query->get('idBook');
         $quantity = (int)$request->query->get('quantity');
         $temQuery = $bookRepository->findInfoBook($idBook);
         $session = $request->getSession();
@@ -105,15 +103,16 @@ class BookController extends AbstractController
             $cartElements = [];
 
         return $this->render('cart/cart.html.twig', [
-            'bookInfos'=>$temQuery->getResult(),
-            'quantity'=>$cartElements,
+            'bookInfos' => $temQuery->getResult(),
+            'quantity' => $cartElements,
         ]);
     }
 
     /**
      * @Route("/updateCart", name="app_update_cart", methods={"GET"})
      */
-    public function updateCart(Request $request): Response {
+    public function updateCart(Request $request): Response
+    {
         $session = $request->getSession();
         $bookId = $request->get('idBook');
         $updatedQuantity = $request->get('quantity');
@@ -123,9 +122,9 @@ class BookController extends AbstractController
             if ($bookId == $id)
                 $quantity = $updatedQuantity;
         }
-        return $this->redirectToRoute('app_review_cart',[
+        return $this->redirectToRoute('app_review_cart', [
             $cartElements
-        ],Response::HTTP_SEE_OTHER);
+        ], Response::HTTP_SEE_OTHER);
     }
 
     /**
@@ -134,7 +133,7 @@ class BookController extends AbstractController
     public function deleteCart(BookRepository $bookRepository, Request $request): Response
     {
         $session = $request->getSession();
-        $idBook= $request->query->get('id');
+        $idBook = $request->query->get('id');
         $quantity = (int)$request->query->get('quantity');
 
         //check if cart is empty
@@ -145,7 +144,7 @@ class BookController extends AbstractController
             unset($cartElements[$idBook]);
             $cartElements = $session->set('cartElements', $cartElements);
         }
-        return $this->redirectToRoute('app_review_cart',[],Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_review_cart', [], Response::HTTP_SEE_OTHER);
     }
 
     /**
