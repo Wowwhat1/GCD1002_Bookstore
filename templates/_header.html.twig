@@ -51,18 +51,32 @@
 									</li>
 								{% endif %}
 								<li><hr class="dropdown-divider"></li>
-							{% endif %}
-							<li>
 								<a class="dropdown-item" href="/{{ app.user ? 'logout' : 'login' }}">
 									{{ app.user ? 'Log Out' : 'Log In' }}
 								</a>
+								{% if is_granted('ROLE_USER') %}
+									<a class="dropdown-item" href="{{ path('app_user_edit', {'id': app.user.id}) }}">
+										{{ app.user ? 'Edit Profile' : 'Log In' }}
+									</a>
+								{% endif %}
 								<a class="dropdown-item" href="/register">
 									{% if app.user %}Register
 									{% endif %}
 									{{ app.user ? '' : 'Register' }}
 								</a>
-							</li>
+							{% else %}
+								<a class="dropdown-item" href="/register">
+									{% if app.user %}Register
+									{% endif %}
+									{{ app.user ? '' : 'Register' }}
+								</a>
+								<a class="dropdown-item" href="/{{ app.user ? 'logout' : 'login' }}">
+									{{ app.user ? 'Log Out' : 'Log In' }}
+								</a>
+							{% endif %}
+							<li></li>
 						</ul>
+
 					</div>
 
 				</div>
